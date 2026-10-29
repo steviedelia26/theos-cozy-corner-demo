@@ -19,16 +19,16 @@ const menu = {
 };
 
 const gallery = [
-  { src: '/images/theos-breakfast.jpg', alt: 'Breakfast plate and coffee on the counter', title: 'A breakfast at the counter', kind: 'FROM THE RESTAURANT' },
-  { src: '/images/theos-interior.jpg', alt: 'Inside Theo’s Cozy Corner on Salem Street', title: 'A look inside', kind: 'FROM THE RESTAURANT' },
-  { src: 'https://cdn.uk-restaurants.com/theos-cozy-corner-restaurant/14395-albums-1.jpg', alt: 'Theo’s Cozy Corner restaurant photo', title: 'The neighborhood table', kind: 'RESTAURANT PHOTO' },
-  { src: 'https://cdn.uk-restaurants.com/theos-cozy-corner-restaurant/14395-albums-2.jpg', alt: 'Theo’s Cozy Corner restaurant photo', title: 'On Salem Street', kind: 'RESTAURANT PHOTO' },
+  { src: '/images/theos-breakfast.jpg', alt: 'Breakfast plate and coffee on the counter', title: 'A breakfast at the counter' },
+  { src: '/images/theos-interior.jpg', alt: 'Inside Theo’s Cozy Corner on Salem Street', title: 'A look inside' },
+  { src: 'https://cdn.uk-restaurants.com/theos-cozy-corner-restaurant/14395-albums-1.jpg', alt: 'Theo’s Cozy Corner restaurant photo', title: 'The neighborhood table' },
+  { src: 'https://cdn.uk-restaurants.com/theos-cozy-corner-restaurant/14395-albums-2.jpg', alt: 'Theo’s Cozy Corner restaurant photo', title: 'On Salem Street' },
 ];
 
 document.documentElement.classList.add('js');
 
 const pageInfo = {
-  home: { label: 'Home', title: 'Theo’s Cozy Corner | Breakfast in Boston’s North End', description: 'Breakfast and lunch at Theo’s Cozy Corner, 162 Salem Street in Boston’s North End. Open daily, 6 a.m.–3 p.m. Cash only.' },
+  home: { label: 'Home', title: 'Theo’s Cozy Corner | Breakfast in Boston’s North End', description: 'Breakfast and lunch at Theo’s Cozy Corner, 162 Salem Street in Boston’s North End. Open daily, 6 a.m. to 3 p.m. Cash only.' },
   menu: { label: 'Menu', title: 'Menu | Theo’s Cozy Corner', description: 'Menu highlights from Theo’s Cozy Corner on Salem Street in Boston’s North End. Ask the restaurant for current offerings and prices.' },
   story: { label: 'Our Story', title: 'Our Story | Theo’s Cozy Corner', description: 'A little look inside Theo’s Cozy Corner, a neighborhood breakfast and lunch spot on Salem Street in Boston’s North End.' },
   reviews: { label: 'Reviews', title: 'Diner Notes | Theo’s Cozy Corner', description: 'Short review excerpts and rating shown on the supplied restaurant listing for Theo’s Cozy Corner.' },
@@ -53,19 +53,19 @@ const menuItems = document.querySelector('.menu-items');
 
 function renderMenu(category) {
   menuItems.replaceChildren();
-  menu[category].forEach(([name, description], index) => {
+  menu[category].forEach(([name, description]) => {
     const row = document.createElement('article');
     row.className = 'menu-item';
-    const number = document.createElement('span');
-    number.className = 'menu-item-num';
-    number.textContent = `0${index + 1}`;
     const itemText = document.createElement('div');
     const heading = document.createElement('h3');
     heading.textContent = name;
-    const detail = document.createElement('p');
-    detail.textContent = description;
-    itemText.append(heading, detail);
-    row.append(number, itemText);
+    itemText.append(heading);
+    if (description && !description.startsWith('A Theo’s Cozy Corner menu highlight')) {
+      const detail = document.createElement('p');
+      detail.textContent = description;
+      itemText.append(detail);
+    }
+    row.append(itemText);
     menuItems.append(row);
   });
 }
@@ -108,7 +108,6 @@ if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-mot
 
 const lightbox = document.querySelector('.lightbox');
 const lightboxImage = lightbox.querySelector('img');
-const lightboxKind = lightbox.querySelector('.lightbox-caption small');
 const lightboxTitle = lightbox.querySelector('.lightbox-caption strong');
 let previousFocus = null;
 
@@ -123,7 +122,6 @@ document.querySelectorAll('.gallery-photo').forEach((button) => button.addEventL
   previousFocus = button;
   lightboxImage.src = photo.src;
   lightboxImage.alt = photo.alt;
-  lightboxKind.textContent = photo.kind;
   lightboxTitle.textContent = photo.title;
   lightbox.hidden = false;
   document.body.style.overflow = 'hidden';
