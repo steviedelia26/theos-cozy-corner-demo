@@ -1,0 +1,15 @@
+{
+  "name": "theos-cozy-corner-redesign",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --configLoader runner --host 0.0.0.0",
+    "build": "vite --configLoader runner build",
+    "preview": "vite --configLoader runner preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "vite": "^6.4.1"
+  },
+  "devDependencies": {}
+}
