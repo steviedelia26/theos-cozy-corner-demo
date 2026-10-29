@@ -65,10 +65,7 @@ function renderMenu(category) {
     const detail = document.createElement('p');
     detail.textContent = description;
     itemText.append(heading, detail);
-    const star = document.createElement('span');
-    star.className = 'menu-item-star';
-    star.textContent = '✳';
-    row.append(number, itemText, star);
+    row.append(number, itemText);
     menuItems.append(row);
   });
 }
